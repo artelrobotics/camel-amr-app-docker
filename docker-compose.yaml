@@ -1,0 +1,21 @@
+version: '3'
+services:
+  camel:
+    image: amr-robot-app:500-001
+    container_name: camel-amr-app
+    environment:
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      - /dev:/dev
+      - ./logs:/.logs
+    network_mode: host
+    devices:
+      - /dev:/dev
+    privileged: true
+    command: /start.sh
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
