@@ -8,14 +8,24 @@ services:
     volumes:
       - /dev:/dev
       - ./logs:/.logs
+      - camel_robot:/robot_ws/src/camel_robot
     network_mode: host
     devices:
       - /dev:/dev
     privileged: true
     command: /start.sh
+    restart: on-failure
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
               capabilities: [gpu]
+
+volumes:
+  camel_robot:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: /home/camel/camel-amr-app-docker/camel_robot
